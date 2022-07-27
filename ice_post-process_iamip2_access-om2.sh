@@ -5,26 +5,32 @@
 ###
 ### - currently assumes that all input are daily
 ### - one file for one year of data instead of concatenating all years because of memory issue on NCI.
+### 1deg_iamip2_CMCC-ESM2ssp126/ 1deg_iamip2_con/             1deg_iamip2_EC-Earth3ssp585/ 1deg_iamip2_his/             
+### 1deg_iamip2_CMCC-ESM2ssp585/ 1deg_iamip2_EC-Earth3ssp126/ 1deg_iamip2_exc/
+###
+### ACCESS-OM2_grid.nc  exclusion/          .ipynb_checkpoints/ ssp126-EC-Earth3/   ssp585-EC-Earth3/   
+### control/            historical/         ssp126-CMCC-ESM2/   ssp585-CMCC-ESM2/
+### yr0=(1958 for historical, 2015 for projection
 
 module load cdo
 
-invar=(algal_N PP_net aice hi hs skl_Nit fswthru_ai)
-outvar=(phycbi intppbi siconc sivol snvol no3bi parbi)
-inuni=('mmol N m-2' 'mg C m-2 d-1' '1' 'm' 'm' 'mmol m-2' 'W m-2')
-outuni=('mol m-3' 'mol m-2 s-1' '%' 'm' 'm' 'mol m-3' 'W m-2')
+invar=(PP_net algal_N aice hi hs skl_Nit fswthru_ai)
+outvar=(intppbi phycbi siconc sivol snvol no3bi parbi)
+inuni=('mg C m-2 d-1' 'mmol N m-2' '1' 'm' 'm' 'mmol m-2' 'W m-2')
+outuni=('mol m-2 s-1' 'mol m-3' '%' 'm' 'm' 'mol m-3' 'W m-2')
 longnam=(
-	'Bottom-ice algae carbon concentration over grid cell area'
     'Vertically integrated primary organic carbon production by bottom-ice algae over grid cell area'
+	'Bottom-ice algae carbon concentration over grid cell area'
     'Percentage of grid cell covered by sea ice'
     'Sea ice thickness (sea-ice volume divided by grid cell area)'
     'Snow thickness (snow volume divided by grid cell area)'
     'Bottom-ice dissolved nitrate concentration over grid cell area'
     'Downwelling photosynthetic radiance flux at bottom ice over grid cell area'
 	)
-confac=(1e-3/0.03*106/16 1e-3 1e-3/12.011/86400 100 1 1 1e-3/0.03 1)
-inexp=(his)
-outexp=(historical)
-yr0=(1958)
+confac=(1e-3/12.011/86400 1e-3/0.03*106/16 100 1 1 1e-3/0.03 1)
+inexp=(EC-Earth3ssp585)
+outexp=(ssp585-EC-Earth3)
+yr0=(2015)
 
 indir=/g/data/ik11/outputs/access-om2/1deg_iamip2_
 outdir=/g/data/v45/hh0162/projects/IAMIP2/ACCESS-OM2
@@ -64,7 +70,3 @@ do
 		} &
 	done
 done
-
-
-
-# shift the datetime back by 12 hours.
